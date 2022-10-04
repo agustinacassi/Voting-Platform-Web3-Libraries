@@ -13,11 +13,11 @@ import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 import { connector } from "../../../config/web3/index";
 import useTruncatedAddress from "../../../hooks/useTruncatedAddress";
 
-
 const WalletData = () => {
   const [balance, setBalance] = useState(0);
-  
-  const { activate, account, library, active, deactivate, error } = useWeb3React();
+
+  const { activate, account, library, active, deactivate, error } =
+    useWeb3React();
 
   const isUnsupportedChain = error instanceof UnsupportedChainIdError;
 

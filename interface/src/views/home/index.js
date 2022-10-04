@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Card from "../../components/web3-js/Card";
+import CardEthers from "../../components/ethers-js/Card"
 import { Grid, GridItem, Center, Heading } from "@chakra-ui/react";
 import Results from "../../components/web3-js/Results";
 import LibrarySelection from "../../components/LibrarySelection";
@@ -27,7 +28,7 @@ const Home = () => {
           </GridItem>
           <GridItem colSpan={6}>
             <Center>
-              <Card />
+              <CardEthers />
             </Center>
             <Results/>
           </GridItem>

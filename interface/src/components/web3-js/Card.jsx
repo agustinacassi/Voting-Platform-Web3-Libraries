@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Stack, Box, Heading, Text, Button, useToast } from "@chakra-ui/react";
+import { Box, Heading, Text, Button, useToast } from "@chakra-ui/react";
 import useContract from "../../hooks/useContract";
 import { useWeb3React } from "@web3-react/core";
 import Web3 from "web3";
