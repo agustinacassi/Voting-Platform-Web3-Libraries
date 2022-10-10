@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { Box, Heading, Text, Button, useToast } from "@chakra-ui/react";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
@@ -9,9 +9,10 @@ const Card = () => {
 
   const { abi, address } = contractArtifact;
 
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-  const metamask = provider.send("eth_requestAccounts", []);
+  const provider = new ethers.providers.WebSocketProvider(
+    `wss://goerli.infura.io/ws/v3/${process.env.INFURA_KEY}`,
+    "goerli"
+  );
 
   const signer = provider.getSigner(account);
 
@@ -21,11 +22,24 @@ const Card = () => {
 
   const toast = useToast();
 
+  const filter = {
+    address: account,
+  };
+
+  voteContractSigner.on("VoteCasted", async (tx) => {
+    const txInfo = await provider.getTransaction(tx);
+    console.log("pending", txInfo);
+  });
+
+  voteContractSigner.on("error", async (tx) => {
+    const txInfo = await provider.getTransaction(tx);
+    console.log("error", txInfo);
+  });
+
   const positiveVoteRecord = useCallback(async () => {
     if (voteContractSigner) {
       const fee = await voteContractReader.VOTE_FEE();
       const feeParsed = await fee.toString();
-      console.log(feeParsed);
       voteContractSigner.vote(2, { value: feeParsed });
     }
   }, [voteContractSigner]);
@@ -34,8 +48,7 @@ const Card = () => {
     if (voteContractSigner) {
       const fee = await voteContractReader.VOTE_FEE();
       const feeParsed = await fee.toString();
-      console.log(feeParsed);
-      voteContractSigner.vote(1, { value: feeParsed });
+      await voteContractSigner.vote(1, { value: feeParsed });
     }
   }, [voteContractSigner]);
 

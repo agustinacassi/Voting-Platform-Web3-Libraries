@@ -2,30 +2,17 @@ import {
     Box,
     Flex,
     HStack,
-    IconButton,
     useDisclosure,
     useColorModeValue,
-    Stack,
     Image,
     Heading,
   } from "@chakra-ui/react";
-  import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-  import NavLink from "./nav-link";
   import Footer from "./footer";
   import WalletData from "./wallet-data";
   
-  const Links = [
-    {
-      name: "Vote",
-      to: "/",
-    },
-    {
-      name: "Results",
-      to: "/results",
-    },
-  ];
   
   const MainLayout = ({ children }) => {
+
     const { isOpen, onOpen, onClose } = useDisclosure();
   
     return (
@@ -49,16 +36,8 @@ import {
             alignItems={"center"}
             justifyContent={"space-between"}
           >
-            <IconButton
-              size={"md"}
-              icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-              aria-label={"Open Menu"}
-              display={{ md: "none" }}
-              onClick={isOpen ? onClose : onOpen}
-            />
             <HStack spacing={8} alignItems={"center"}>
               <Flex alignItems="center">
-                <Image src="./images/platzi.svg" width="80px" />
                 <Heading size="md" color="black" mt={0.2} ml={1}>
                   Voting Platform
                 </Heading>
@@ -68,34 +47,17 @@ import {
                 spacing={4}
                 display={{ base: "none", md: "flex" }}
               >
-                {Links.map(({ name, to }) => (
-                  <NavLink key={name} to={to}>
-                    {name}
-                  </NavLink>
-                ))}
               </HStack>
             </HStack>
             <HStack>
             <WalletData />
             </HStack>
           </Flex>
-  
-          {isOpen ? (
-            <Box pb={4} display={{ md: "none" }}>
-              <Stack as={"nav"} spacing={4}>
-                {Links.map(({ name, to }) => (
-                  <NavLink key={name} to={to}>
-                    {name}
-                  </NavLink>
-                ))}
-              </Stack>
-            </Box>
-          ) : null}
         </Box>
         <Box mx="auto" flex={1} p={4} maxW={"7xl"} width="100%">
           {children}
         </Box>
-        <Footer />
+        <Footer/>
       </Flex>
     );
   };
